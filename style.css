@@ -355,4 +355,11 @@ select:focus {
     button, select {
         min-height: 44px;
     }
+    
+    /* 모바일에서 게임패드 선택 커서 숨기기 */
+    .card.selected {
+        box-shadow: none;
+        transform: none;
+        border: none;
+    }
 } 

@@ -101,8 +101,8 @@ class MemoryGame {
             if (card.isMatched) cardElement.classList.add('matched');
             if (card.isMatched || this.previewMode) cardElement.classList.add('disabled');
             
-            // 게임패드 선택 표시
-            if (index === this.selectedCardIndex && !this.previewMode) {
+            // 게임패드 선택 표시 (모바일이 아니고 게임패드가 연결되어 있을 때만)
+            if (index === this.selectedCardIndex && !this.previewMode && !this.isMobileDevice() && this.gamepadIndex !== -1) {
                 cardElement.classList.add('selected');
             }
             
@@ -345,6 +345,12 @@ class MemoryGame {
     }
     
     setupGamepad() {
+        // 모바일 환경에서는 게임패드 기능 비활성화
+        if (this.isMobileDevice()) {
+            this.updateGamepadStatus('모바일 환경');
+            return;
+        }
+        
         // 게임패드 연결 이벤트
         window.addEventListener('gamepadconnected', (e) => {
             console.log('게임패드 연결됨:', e.gamepad);
@@ -375,6 +381,11 @@ class MemoryGame {
         }
     }
     
+    isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+               (navigator.maxTouchPoints && navigator.maxTouchPoints > 2);
+    }
+    
     updateGamepadStatus(status) {
         const statusElement = document.getElementById('gamepad-status');
         if (statusElement) {
@@ -401,7 +412,8 @@ class MemoryGame {
     }
     
     pollGamepad() {
-        if (this.gamepadIndex === -1) return;
+        // 모바일 환경에서는 게임패드 폴링 비활성화
+        if (this.isMobileDevice() || this.gamepadIndex === -1) return;
         
         const gamepads = navigator.getGamepads();
         const gamepad = gamepads[this.gamepadIndex];
