@@ -1,0 +1,358 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+    margin: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #4a5568;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.game-info {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    background: #f7fafc;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.score, .timer, .gamepad-status {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.controls {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+select {
+    padding: 10px 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1rem;
+    background: white;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.game-board {
+    display: grid;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.card {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+    background: white;
+    border: 2px solid #e2e8f0;
+}
+
+.card.matched {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    transform: rotateY(180deg);
+    animation: pulse 0.6s ease-in-out;
+}
+
+.card.disabled {
+    pointer-events: none;
+}
+
+.card.selected {
+    box-shadow: 0 0 20px #667eea, 0 0 30px #667eea;
+    transform: scale(1.1);
+    border: 3px solid #667eea;
+    z-index: 10;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: rotateY(180deg) scale(1); }
+    50% { transform: rotateY(180deg) scale(1.1); }
+}
+
+.game-over {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.game-over-content {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 90%;
+}
+
+.game-over h2 {
+    color: #48bb78;
+    margin-bottom: 15px;
+    font-size: 2rem;
+}
+
+.game-over p {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    color: #4a5568;
+}
+
+.final-stats {
+    background: #f7fafc;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.final-stats p {
+    margin: 10px 0;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.hidden {
+    display: none;
+}
+
+.game-board {
+    position: relative;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .container {
+        margin: 10px;
+        padding: 20px;
+        max-width: 95vw;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+    
+    .card {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+        min-width: 60px;
+        min-height: 60px;
+    }
+    
+    .game-info {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+    }
+    
+    .controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    button {
+        padding: 15px 20px;
+        font-size: 1.1rem;
+        min-height: 50px;
+    }
+    
+    select {
+        padding: 12px 15px;
+        font-size: 1rem;
+        min-height: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin: 5px;
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+    
+    .card {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+        min-width: 50px;
+        min-height: 50px;
+    }
+    
+    .game-board {
+        gap: 4px;
+    }
+    
+    .game-info {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+    
+    button {
+        padding: 12px 16px;
+        font-size: 1rem;
+        min-height: 45px;
+    }
+    
+    select {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+        min-height: 45px;
+    }
+}
+
+@media (max-width: 360px) {
+    .card {
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+        min-width: 45px;
+        min-height: 45px;
+    }
+    
+    .game-board {
+        gap: 3px;
+    }
+    
+    h1 {
+        font-size: 1.3rem;
+    }
+    
+    .game-info {
+        font-size: 0.8rem;
+    }
+}
+
+/* 터치 최적화 */
+@media (hover: none) and (pointer: coarse) {
+    .card {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+    
+    .card:hover {
+        transform: none;
+    }
+    
+    .card:active {
+        transform: scale(0.95);
+    }
+    
+    button {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+    
+    button:active {
+        transform: scale(0.95);
+    }
+    
+    /* 모바일에서 게임패드 상태 숨기기 */
+    .gamepad-status {
+        display: none;
+    }
+    
+    /* 모바일에서 더 큰 터치 영역 */
+    .card {
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+    button, select {
+        min-height: 44px;
+    }
+} 

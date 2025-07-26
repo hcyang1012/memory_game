@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#667eea">
+    <title>메모리 게임</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧠 메모리 게임</h1>
+            <div class="game-info">
+                <div class="score">
+                    <span>시도 횟수: </span>
+                    <span id="attempts">0</span>
+                </div>
+                <div class="timer">
+                    <span>시간: </span>
+                    <span id="timer">00:00</span>
+                </div>
+                <div class="gamepad-status">
+                    <span>게임패드: </span>
+                    <span id="gamepad-status">연결 안됨</span>
+                </div>
+            </div>
+            <div class="controls">
+                <button id="new-game-btn">새 게임</button>
+                <select id="difficulty">
+                    <option value="easy">쉬움 (4x4)</option>
+                    <option value="medium">보통 (6x6)</option>
+                    <option value="hard">어려움 (8x8)</option>
+                </select>
+            </div>
+        </header>
+        
+        <main>
+            <div id="game-board" class="game-board"></div>
+            
+            <div id="game-over" class="game-over hidden">
+                <div class="game-over-content">
+                    <h2>🎉 축하합니다!</h2>
+                    <p>모든 카드를 찾았습니다!</p>
+                    <div class="final-stats">
+                        <p>총 시도 횟수: <span id="final-attempts">0</span></p>
+                        <p>소요 시간: <span id="final-time">00:00</span></p>
+                    </div>
+                    <button id="play-again-btn">다시 하기</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
